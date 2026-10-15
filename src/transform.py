@@ -84,3 +84,18 @@ def replace_placeholders(df: pd.DataFrame) -> pd.DataFrame:
         df[column] = df[column].replace(placeholder, np.nan)
 
     return df
+
+PERSONAL_DATA_COLUMNS = [
+    "REPRESENTANTE",
+    "CARGO_REPRESENTANTE",
+]
+
+
+def remove_personal_data(df: pd.DataFrame) -> pd.DataFrame:
+    """Remove colunas com dados pessoais de representantes (LGPD)."""
+
+    print("Removendo dados pessoais...")
+
+    df = df.drop(columns=PERSONAL_DATA_COLUMNS)
+
+    return df
