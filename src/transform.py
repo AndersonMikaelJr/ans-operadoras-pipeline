@@ -43,6 +43,10 @@ EXPECTED_COLUMNS = [
     "DATA_REGISTRO_ANS",
 ]
 
+PLACEHOLDERS = {
+    "NOME_FANTASIA": "******",
+    "ENDERECO_ELETRONICO": "XX@XX.XX",
+}
 
 def validate_data(file_path: Path) -> pd.DataFrame:
     """Lê o CSV bruto e confere se a estrutura esperada está presente."""
@@ -66,5 +70,17 @@ def validate_data(file_path: Path) -> pd.DataFrame:
     print(f"Colunas encontradas: {len(df.columns)}")
     print(f"Linhas recebidas: {len(df)}")
     print("Validação estrutural concluída.")
+
+    return df
+
+def replace_placeholders(df: pd.DataFrame) -> pd.DataFrame:
+    """Converte valores de preenchimento falso em nulos."""
+
+    print("Substituindo valores de preenchimento falso...")
+
+    df = df.copy()
+
+    for column, placeholder in PLACEHOLDERS.items():
+        df[column] = df[column].replace(placeholder, np.nan)
 
     return df
