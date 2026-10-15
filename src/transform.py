@@ -1,6 +1,23 @@
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
+
+
+def clean_text_columns(df: pd.DataFrame) -> pd.DataFrame:
+    """Remove espaços extras e converte textos vazios em nulos."""
+
+    print("Limpando textos...")
+
+    df = df.copy()
+
+    for column in df.columns:
+        df[column] = df[column].str.strip()
+
+    df = df.replace("", np.nan)
+
+    return df
+
 
 
 EXPECTED_COLUMNS = [
