@@ -145,3 +145,32 @@ def flag_suspicious_phones(df: pd.DataFrame) -> pd.DataFrame:
     print(f"Telefones suspeitos: {df['TELEFONE_SUSPEITO'].sum()}")
 
     return df
+
+def count_missing_region(df: pd.DataFrame) -> pd.DataFrame:
+    """Conta operadoras sem região de comercialização informada."""
+
+    missing = df["REGIAO_DE_COMERCIALIZACAO"].isna().sum()
+    print(f"Região de comercialização em branco: {missing}")
+
+    return df
+
+
+def transform_data(file_path: Path) -> pd.DataFrame:
+    """Executa todas as regras de transformação, na ordem."""
+
+    print("Iniciando transformação dos dados...")
+
+    df = validate_data(file_path)
+    df = clean_text_columns(df)
+    df = replace_placeholders(df)
+    df = remove_personal_data(df)
+    df = fix_number_decimals(df)
+    df = convert_dates(df)
+    df = flag_suspicious_phones(df)
+    df = count_missing_region(df)
+
+    print(f"Linhas após transformação: {len(df)}")
+    print(f"Colunas após transformação: {len(df.columns)}")
+    print("Transformação concluída.")
+
+    return df
