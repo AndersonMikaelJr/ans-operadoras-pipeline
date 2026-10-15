@@ -128,3 +128,20 @@ def convert_dates(df: pd.DataFrame) -> pd.DataFrame:
     print(f"Datas nulas ou inválidas: {invalid_dates}")
 
     return df
+
+def flag_suspicious_phones(df: pd.DataFrame) -> pd.DataFrame:
+    """Marca telefones suspeitos sem alterar o número original."""
+
+    print("Marcando telefones suspeitos...")
+
+    df = df.copy()
+
+    phone_digits = df["TELEFONE"].str.replace(r"\D", "", regex=True).str.len()
+    invalid_ddd = df["DDD"] == "01"
+    too_long = phone_digits == 16
+
+    df["TELEFONE_SUSPEITO"] = invalid_ddd | too_long
+
+    print(f"Telefones suspeitos: {df['TELEFONE_SUSPEITO'].sum()}")
+
+    return df
