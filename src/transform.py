@@ -110,3 +110,21 @@ def fix_number_decimals(df: pd.DataFrame) -> pd.DataFrame:
     df["NUMERO"] = df["NUMERO"].str.replace(r"\.0$", "", regex=True)
 
     return df
+
+def convert_dates(df: pd.DataFrame) -> pd.DataFrame:
+    """Converte DATA_REGISTRO_ANS de texto para data."""
+
+    print("Convertendo datas...")
+
+    df = df.copy()
+
+    df["DATA_REGISTRO_ANS"] = pd.to_datetime(
+        df["DATA_REGISTRO_ANS"],
+        format="%Y-%m-%d",
+        errors="coerce",
+    )
+
+    invalid_dates = df["DATA_REGISTRO_ANS"].isna().sum()
+    print(f"Datas nulas ou inválidas: {invalid_dates}")
+
+    return df
