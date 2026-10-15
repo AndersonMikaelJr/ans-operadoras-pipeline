@@ -99,3 +99,14 @@ def remove_personal_data(df: pd.DataFrame) -> pd.DataFrame:
     df = df.drop(columns=PERSONAL_DATA_COLUMNS)
 
     return df
+
+def fix_number_decimals(df: pd.DataFrame) -> pd.DataFrame:
+    """Remove o sufixo '.0' de números que foram lidos como decimais."""
+
+    print("Corrigindo números com .0...")
+
+    df = df.copy()
+
+    df["NUMERO"] = df["NUMERO"].str.replace(r"\.0$", "", regex=True)
+
+    return df
