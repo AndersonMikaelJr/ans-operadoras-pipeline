@@ -19,6 +19,18 @@ def clean_text_columns(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+def standardize_case(df: pd.DataFrame) -> pd.DataFrame:
+    """Padroniza BAIRRO e LOGRADOURO em maiúsculas."""
+
+    print("Padronizando caixa...")
+
+    df = df.copy()
+
+    for column in ["BAIRRO", "LOGRADOURO"]:
+        df[column] = df[column].str.upper()
+
+    return df
+
 
 EXPECTED_COLUMNS = [
     "REGISTRO_OPERADORA",
@@ -48,6 +60,7 @@ PLACEHOLDERS = {
     "ENDERECO_ELETRONICO": "XX@XX.XX",
 }
 
+
 def validate_data(file_path: Path) -> pd.DataFrame:
     """Lê o CSV bruto e confere se a estrutura esperada está presente."""
 
@@ -73,6 +86,7 @@ def validate_data(file_path: Path) -> pd.DataFrame:
 
     return df
 
+
 def replace_placeholders(df: pd.DataFrame) -> pd.DataFrame:
     """Converte valores de preenchimento falso em nulos."""
 
@@ -84,6 +98,7 @@ def replace_placeholders(df: pd.DataFrame) -> pd.DataFrame:
         df[column] = df[column].replace(placeholder, np.nan)
 
     return df
+
 
 PERSONAL_DATA_COLUMNS = [
     "REPRESENTANTE",
@@ -100,6 +115,7 @@ def remove_personal_data(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
+
 def fix_number_decimals(df: pd.DataFrame) -> pd.DataFrame:
     """Remove o sufixo '.0' de números que foram lidos como decimais."""
 
@@ -110,6 +126,7 @@ def fix_number_decimals(df: pd.DataFrame) -> pd.DataFrame:
     df["NUMERO"] = df["NUMERO"].str.replace(r"\.0$", "", regex=True)
 
     return df
+
 
 def convert_dates(df: pd.DataFrame) -> pd.DataFrame:
     """Converte DATA_REGISTRO_ANS de texto para data."""
@@ -129,6 +146,7 @@ def convert_dates(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
+
 def flag_suspicious_phones(df: pd.DataFrame) -> pd.DataFrame:
     """Marca telefones suspeitos sem alterar o número original."""
 
@@ -146,6 +164,7 @@ def flag_suspicious_phones(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
+
 def count_missing_region(df: pd.DataFrame) -> pd.DataFrame:
     """Conta operadoras sem região de comercialização informada."""
 
@@ -162,6 +181,7 @@ def transform_data(file_path: Path) -> pd.DataFrame:
 
     df = validate_data(file_path)
     df = clean_text_columns(df)
+    df = standardize_case(df)
     df = replace_placeholders(df)
     df = remove_personal_data(df)
     df = fix_number_decimals(df)
