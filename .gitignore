@@ -1,4 +1,10 @@
+# dados baixados e banco gerado (fora do Git, conforme o enunciado)
 data/
-.venv/
 *.db
+
+# ambiente virtual
+.venv/
+
+# cache do Python
 __pycache__/
+*.pyc
