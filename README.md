@@ -20,7 +20,7 @@ flowchart LR
 1. Clonar o repositório e entrar na pasta:
 
 ```
-   git clone https://github.com/SEU_USUARIO/ans-operadoras-pipeline.git
+   git clone https://github.com/AndersonMikaelJr/ans-operadoras-pipeline.git
    cd ans-operadoras-pipeline
 ```
 
