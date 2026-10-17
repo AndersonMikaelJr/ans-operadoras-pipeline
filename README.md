@@ -17,10 +17,35 @@ flowchart LR
 
 ## Como executar
 
-1. Criar e ativar o ambiente virtual
-2. Instalar as dependências: `pip install -r requirements.txt`
-3. Rodar o pipeline: `python src/main.py`
-4. Consultar o banco no DBeaver: `data/operadoras.db`, com as consultas em `sql/consultas.sql`
+1. Clonar o repositório e entrar na pasta:
+
+```
+   git clone https://github.com/SEU_USUARIO/ans-operadoras-pipeline.git
+   cd ans-operadoras-pipeline
+```
+
+2. Criar e ativar o ambiente virtual:
+
+```
+   python -m venv .venv
+   .venv\Scripts\activate
+```
+
+3. Instalar as dependências:
+
+```
+   pip install -r requirements.txt
+```
+
+4. Rodar o pipeline:
+
+```
+   python src/main.py
+```
+
+5. Consultar o banco no DBeaver: `data/operadoras.db`, com as consultas em `sql/consultas.sql`.
+
+> No Windows, se o PowerShell bloquear a ativação do ambiente virtual, rode uma vez: `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
 
 ## Decisões de limpeza
 
